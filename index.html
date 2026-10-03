@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>A Birthday Surprise 🎂</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #1a0b2e;
+  --bg2: #3a1154;
+  --pink: #ff3377;
+  --yellow: #ffcc00;
+  --mint: #4ade80;
+  --text: #fff4ea;
+  --glass: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --bg: #130722; --bg2: #2d0d40; }
+}
+*, *:before, *:after { box-sizing: inherit; }
+html { height: 100%; scroll-padding-top: env(safe-area-inset-top, 0px); }
+body {
+  margin: 0; min-height: 100%; font-family: 'Fredoka', system-ui, sans-serif;
+  color: var(--text); 
+  background: radial-gradient(circle at 50% 50%, var(--bg2), var(--bg)); 
+  background-size: 200% 200%;
+  animation: bg-pan 10s ease infinite;
+  background-color: var(--bg); text-align: center; overflow-x: hidden;
+}
+@keyframes bg-pan {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+main {
+  min-height: 100vh; display: flex; flex-direction: column; align-items: center;
+  justify-content: center; padding: 24px 20px; max-width: 620px; margin: 0 auto;
+  position: relative; z-index: 10;
+}
+.step { display: none; width: 100%; flex-direction: column; align-items: center; gap: 24px; }
+.step.on { display: flex; animation: slideUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+@keyframes slideUp { from { transform: translateY(40px) scale(0.9); opacity: 0; } to { transform: none; opacity: 1; } }
+h1 { font-size: 2.5rem; line-height: 1.2; margin: 0; font-weight: 700; text-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+p { margin: 0; font-size: 1.2rem; line-height: 1.5; max-width: 36ch; opacity: 0.9; }
+.big { font-size: 5rem; line-height: 1; animation: float 3s ease-in-out infinite; display: inline-block; }
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px) scale(1.05); } }
+button {
+  font: inherit; font-weight: 600; font-size: 1.2rem; border: 0; border-radius: 999px;
+  padding: 16px 32px; background: linear-gradient(135deg, var(--pink), #ff6b9d); color: #fff;
+  cursor: pointer; box-shadow: 0 8px 0 #b82a60, 0 15px 20px rgba(0,0,0,0.2); transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+button:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 10px 0 #b82a60, 0 20px 25px rgba(0,0,0,0.3); }
+button:active { transform: translateY(6px); box-shadow: 0 2px 0 #b82a60, 0 5px 10px rgba(0,0,0,0.2); }
+button:focus-visible, label:focus-within { outline: 3px solid var(--yellow); outline-offset: 3px; }
+button.alt { background: linear-gradient(135deg, var(--mint), #9fffe0); color: #12342b; box-shadow: 0 8px 0 #3da98b, 0 15px 20px rgba(0,0,0,0.2); }
+button.alt:hover { box-shadow: 0 10px 0 #3da98b, 0 20px 25px rgba(0,0,0,0.3); }
+button.alt:active { box-shadow: 0 2px 0 #3da98b, 0 5px 10px rgba(0,0,0,0.2); }
+.bar { width: 100%; height: 22px; border-radius: 99px; background: rgba(0,0,0,0.2); border: 2px solid var(--glass-border); overflow: hidden; box-shadow: inset 0 2px 5px rgba(0,0,0,0.2); }
+.bar i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--pink), var(--yellow), var(--mint)); background-size: 200% 100%; animation: gradientMove 2s linear infinite; transition: width 0.4s ease-out; }
+@keyframes gradientMove { 0% { background-position: 100% 0; } 100% { background-position: -100% 0; } }
+.row { display: flex; gap: 20px; justify-content: center; align-items: center; position: relative; height: 80px; width: 100%; }
+#no { position: absolute; transition: top 0.2s, left 0.2s; }
+.cake { display: flex; gap: 16px; font-size: 3.5rem; justify-content: center; margin-bottom: 10px; }
+.cake span { cursor: pointer; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s, filter 0.3s; user-select: none; }
+.cake span:hover { transform: scale(1.2) translateY(-10px); filter: brightness(1.2); }
+.cake span.out { opacity: 0.3; transform: scale(0.7); filter: grayscale(1); pointer-events: none; }
+.base { font-size: 7rem; line-height: 1; margin-top: -30px; animation: bounceCake 2s infinite ease-in-out; }
+@keyframes bounceCake { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.95); } }
+.boxes { display: flex; gap: 20px; justify-content: center; }
+.boxes button { font-size: 3.5rem; padding: 20px; background: linear-gradient(135deg, var(--yellow), #ffe68a); box-shadow: 0 8px 0 #b8952f; animation: wiggle 3s infinite ease-in-out; border-radius: 20px; }
+.boxes button:nth-child(2) { animation-delay: 0.2s; }
+.boxes button:nth-child(3) { animation-delay: 0.4s; }
+@keyframes wiggle { 0%, 90%, 100% { transform: rotate(0deg); } 93% { transform: rotate(-5deg) scale(1.1); } 96% { transform: rotate(5deg) scale(1.1); } }
+#msg { min-height: 3.2em; font-weight: 600; color: var(--yellow); font-size: 1.4rem; }
+#fin { padding: 0; }
+#fin.on { display: flex; }
+.wish { max-width: 38ch; font-size: 1.3rem; padding: 20px; background: var(--glass); border-radius: 16px; backdrop-filter: blur(10px); border: 1px solid var(--glass-border); box-shadow: 0 10px 30px rgba(0,0,0,0.3); margin-top: 10px; }
+.add { display: inline-block; margin-top: 10px; font-size: 1rem; padding: 12px 24px; border-radius: 99px; background: var(--glass); border: 1px solid var(--glass-border); cursor: pointer; transition: all 0.2s; font-weight: 600; }
+.add:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+.add input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+#lb { position: fixed; inset: 0; z-index: 99; background: rgba(10,2,18,0.95); display: none; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(5px); opacity: 0; transition: opacity 0.3s; }
+#lb.on { display: flex; opacity: 1; }
+#lb img { max-width: 90vw; max-height: 85vh; border-radius: 16px; border: 4px solid var(--pink); box-shadow: 0 20px 50px rgba(0,0,0,0.5); object-fit: contain; transform: scale(0.9); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+#lb.on img { transform: scale(1); }
+.card { background: var(--glass); backdrop-filter: blur(8px); border: 2px dashed var(--yellow); border-radius: 24px; padding: 30px 24px; font-size: 1.4rem; font-weight: 600; min-height: 160px; display: flex; align-items: center; justify-content: center; width: 100%; box-shadow: 0 10px 30px rgba(0,0,0,0.2); transition: transform 0.3s, border-color 0.3s; }
+.card:hover { transform: scale(1.02); border-style: solid; border-color: var(--pink); }
+.clauses { display: flex; flex-direction: column; gap: 16px; width: 100%; }
+.clauses button { background: var(--glass); border: 1px solid var(--glass-border); box-shadow: none; font-size: 1.1rem; color: var(--text); text-align: left; padding: 16px 20px; transition: all 0.3s; display: flex; justify-content: space-between; align-items: center; }
+.clauses button:hover { background: rgba(255,255,255,0.15); transform: translateX(5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+.clauses button.ok { background: linear-gradient(135deg, var(--mint), #7be0bb); color: #12342b; transform: scale(1.02); font-weight: 700; border-color: transparent; box-shadow: 0 5px 15px rgba(74,222,128,0.3); }
+#fin.on { width: 100vw; max-width: 100vw; overflow-x: hidden; }
+.nm { font-size: 2.2rem; font-weight: 700; color: var(--yellow); text-shadow: 0 2px 10px rgba(255,204,0,0.4); margin-bottom: 10px; }
+.wall { width: 100vw; display: flex; flex-direction: column; gap: 24px; overflow: hidden; padding: 30px 0; -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
+.track { display: flex; gap: 24px; width: max-content; animation: slide linear infinite; }
+.wall:hover .track { animation-play-state: paused; }
+@keyframes slide { from { transform: translateX(0); } to { transform: translateX(calc(-50% - 12px)); } }
+.pc { flex: none; width: min(65vw, 260px); background: #fff; color: #4a1a5e; padding: 12px 12px 16px; border-radius: 12px; box-shadow: 0 15px 35px rgba(0,0,0,0.5); cursor: pointer; transform: rotate(var(--r)); transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s; }
+.pc:nth-child(odd) { --r: -4deg; } .pc:nth-child(even) { --r: 4deg; margin-top: 20px; }
+.pc:hover { z-index: 2; transform: scale(1.1) rotate(0deg) !important; box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
+.pc .im { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 5rem; background: linear-gradient(135deg, var(--pink), var(--yellow)); }
+.pc span { display: block; margin-top: 12px; font-weight: 700; font-size: 1.2rem; }
+@media (prefers-reduced-motion: reduce) { .track { animation-duration: 200s !important; } }
+canvas { position: fixed; inset: 0; pointer-events: none; z-index: 5; }
+@media (prefers-reduced-motion: reduce) { .step.on { animation: none; } }
+</style>
+</head>
+<body>
+<canvas id="cf"></canvas>
+<main>
+
+<section class="step on" id="s0">
+  <div class="big">🕵️‍♂️</div>
+  <h1>Hold on. Security check.</h1>
+  <p>This page is for one person only. Let me verify you're really her.</p>
+  <div class="bar"><i id="pb"></i></div>
+  <p id="pt">Scanning cuteness levels…</p>
+</section>
+
+<section class="step" id="s1">
+  <div class="big">💘</div>
+  <h1>Important question</h1>
+  <p>Do you love me?</p>
+  <div class="row"><button id="yes">Yes 😍</button><button class="alt" id="no">No</button></div>
+  <p id="nt">&nbsp;</p>
+</section>
+
+<section class="step" id="s2">
+  <h1>Make a wish & blow the candles</h1>
+  <p>Tap every candle. Don't tell anyone your wish. (Or tell me. I'm listening.)</p>
+  <div class="cake" id="candles"><span>🕯️</span><span>🕯️</span><span>🕯️</span><span>🕯️</span><span>🕯️</span></div>
+  <div class="base">🎂</div>
+  <p id="ct">0 / 5 blown</p>
+</section>
+
+<section class="step" id="s3">
+  <h1>Pick your gift 🎁</h1>
+  <p>Choose carefully. One of them is the best gift ever.</p>
+  <div class="boxes" id="boxes"><button>🎁</button><button>🎁</button><button>🎁</button></div>
+  <p id="msg"></p>
+</section>
+
+<section class="step" id="s4">
+  <div class="big">🧮</div>
+  <h1>Age calculator</h1>
+  <p id="at">Let's work out how old you are today.</p>
+  <button id="ab">Calculate</button>
+</section>
+
+<section class="step" id="s5">
+  <h1>Reasons I love you 💌</h1>
+  <div class="card" id="rc">Tap below to open the first reason.</div>
+  <button id="rb">Next reason</button>
+</section>
+
+<section class="step" id="s6">
+  <div class="big">📜</div>
+  <h1>Official birthday contract</h1>
+  <p>Agree to every clause to unlock your surprise.</p>
+  <div class="clauses" id="cl">
+    <button>I will eat cake with zero guilt 🍰</button>
+    <button>I will take at least 100 photos today 📸</button>
+    <button>I am the birthday queen all day 👑</button>
+    <button>I will love my boyfriend a little extra 😘</button>
+  </div>
+</section>
+
+<section class="step" id="fin">
+  <h1>Happy Birthday!</h1>
+  <p class="nm"><b id="who"></b> 🎉</p>
+  <div class="wall" id="wall"></div>
+  <p class="wish" id="wish"></p>
+  <button id="again" class="alt" style="margin-top: 10px;">Replay the surprise</button>
+</section>
+
+</main>
+<div id="lb"><img id="lbi" alt="Photo"></div>
+<script>
+/* ===== EDIT THESE ===== */
+const NAME = "My Love";
+const FROM = "Your favourite human";
+const WISH = "You make every ordinary day feel like a party. Thank you for the laughs, the chaos, and for putting up with me. Hope this year is as amazing as you are. I love you! 💖";
+
+// 📸 ADD YOUR IMAGE LINKS HERE! 
+// Replace the placeholder URLs with actual links to your photos.
+// If you leave this array empty, you can still upload photos from your device at the end!
+let PHOTOS = [
+  // "https://example.com/photo1.jpg",
+  // "https://example.com/photo2.jpg"
+]; 
+/* ====================== */
+
+const $=id=>document.getElementById(id);
+const steps=[...document.querySelectorAll('.step')];
+function go(id){steps.forEach(s=>s.classList.toggle('on',s.id===id));window.scrollTo(0,0)}
+$('who').textContent=NAME;
+$('wish').innerHTML=WISH+'<br><br>— '+FROM;
+
+/* Step 0: fake scan */
+function scan(){
+  go('s0');$('pb').style.width='0';
+  const t=["Scanning cuteness levels…","Cuteness off the charts ⚠️","Checking smile… dangerously nice","Verified: absolutely her ✅"];
+  let i=0;const iv=setInterval(()=>{
+    $('pb').style.width=((i+1)*25)+'%';$('pt').textContent=t[i];i++;
+    if(i===4){clearInterval(iv);setTimeout(()=>go('s1'),1000)}
+  },900);
+}
+
+/* Step 1: runaway No button */
+const lines=["Wrong answer 😤","Nice try!","The button is shy","Catch me if you can","Just say yes, please 🥺"];
+let nl=0;
+function dodge(){
+  const b=$('no'),r=b.parentElement.getBoundingClientRect();
+  b.style.left=(Math.random()*(r.width-90))+'px';
+  b.style.top=(Math.random()*60-30)+'px';
+  $('nt').textContent=lines[nl++%lines.length];
+}
+$('no').addEventListener('mouseenter',dodge);
+$('no').addEventListener('touchstart',e=>{e.preventDefault();dodge()},{passive:false});
+$('no').addEventListener('click',dodge);
+$('yes').onclick=()=>{boom(60);go('s2')};
+
+/* Step 2: candles */
+const cl=["Poof! 💨","Wish #2 received","Almost there…","One more! Lungs of steel 🫁","All out!"];
+let blown=0;
+document.querySelectorAll('#candles span').forEach(c=>c.onclick=()=>{
+  if(c.classList.contains('out'))return;
+  c.classList.add('out');c.textContent='💨';
+  $('ct').textContent=cl[blown];blown++;
+  if(blown===5){boom(120);setTimeout(()=>go('s3'),1300)}
+});
+
+/* Step 3: gift boxes */
+const gm=["A lifetime supply of hugs 🤗","Unlimited kisses (terms: none) 😘","Me, forever. No returns, no refunds 😎"];
+let opened=0;
+document.querySelectorAll('#boxes button').forEach((b,i)=>b.onclick=()=>{
+  if(b.dataset.o)return;b.dataset.o=1;b.textContent=['🤗','😘','💝'][i];
+  $('msg').textContent=gm[i];opened++;
+  if(opened===3){$('msg').textContent="Plot twist: every gift is you getting me 😎";setTimeout(()=>go('s4'),1800)}
+});
+
+/* Step 4: age calculator */
+$('ab').onclick=()=>{
+  const m=["Calculating…","Counting candles…","Error: too many candles, fire hazard 🔥","Result: age unknown, legally fabulous ✨"];
+  let i=0;$('ab').style.display='none';$('at').textContent=m[0];
+  const iv=setInterval(()=>{i++;$('at').textContent=m[i];if(i===3){clearInterval(iv);boom(80);setTimeout(()=>go('s5'),1700)}},1000);
+};
+
+/* Step 5: reasons */
+const rs=["You laugh at my jokes, even the terrible ones 😂","You share your food. Sometimes. Mostly. 🍟","You're the only one who gets my weird 🤪","Your smile fixes my worst days ☀️","You say '5 minutes' and I wait an hour. Worth it. ⏰","Because it's you. Always you. ❤️"];
+let ri=0;
+$('rb').onclick=()=>{
+  if(ri>=rs.length){go('s6');return}
+  $('rc').textContent=rs[ri++];
+  if(ri===rs.length)$('rb').textContent='Next surprise 🎁';
+};
+
+/* Step 6: contract */
+let ag=0;
+document.querySelectorAll('#cl button').forEach(b=>b.onclick=()=>{
+  if(b.classList.contains('ok'))return;b.classList.add('ok');b.textContent='✅ '+b.textContent;ag++;
+  if(ag===4){boom(100);setTimeout(finale,1200)}
+});
+
+/* Finale: infinite loop of photo cards */
+let raf,t0;
+const caps=["Us 💕","Cutie 😍","Best day","Pure joy ✨","Queen 👑","My favourite","Smile! 😊","Memories 💖"];
+const emo=['💖','🎂','🥳','🎈','🎁','✨','🌹','🍰'];
+function mk(i){
+  const c=document.createElement('div');c.className='pc';
+  let im;
+  if(PHOTOS.length){
+    im=document.createElement('img');
+    im.src=PHOTOS[i%PHOTOS.length];
+    im.alt='Memory '+(i%PHOTOS.length+1);
+    c.onclick=()=>{
+      $('lbi').src=im.src;
+      $('lb').classList.add('on');
+    }
+  } else {
+    im=document.createElement('div');
+    im.textContent=emo[i%emo.length];
+  }
+  im.className='im';
+  const t=document.createElement('span');t.textContent=caps[i%caps.length];
+  c.append(im,t);return c;
+}
+function buildWall(){
+  const w=$('wall');w.innerHTML='';
+  const n=Math.max(6,PHOTOS.length);
+  [0,1].forEach(row=>{
+    const tr=document.createElement('div');tr.className='track';
+    for(let rep=0;rep<2;rep++)for(let k=0;k<n;k++)tr.appendChild(mk(row?n-1-k+3:k));
+    tr.style.animationDuration=(n*6)+'s';
+    if(row)tr.style.animationDirection='reverse';
+    w.appendChild(tr);
+  });
+}
+function finale(){
+  go('fin');boom(200);setTimeout(()=>boom(160),900);
+  buildWall();
+}
+$('lb').onclick=()=>$('lb').classList.remove('on');
+$('again').onclick=()=>{
+  cancelAnimationFrame(raf);nl=0;blown=0;opened=0;ri=0;ag=0;$('rb').textContent='Next reason';$('rc').textContent='Tap below to open the first reason.';$('ab').style.display='';$('at').textContent="Let's work out how old you are today.";document.querySelectorAll('#cl button').forEach(b=>{b.classList.remove('ok');b.textContent=b.textContent.replace('✅ ','')});
+  document.querySelectorAll('#candles span').forEach(c=>{c.classList.remove('out');c.textContent='🕯️'});
+  $('ct').textContent='0 / 5 blown';$('msg').textContent='';$('nt').innerHTML='&nbsp;';
+  document.querySelectorAll('#boxes button').forEach(b=>{delete b.dataset.o;b.textContent='🎁'});
+  scan();
+};
+
+/* Confetti */
+const cv=$('cf'),cx=cv.getContext('2d');let ps=[];
+function size(){cv.width=innerWidth;cv.height=innerHeight}size();addEventListener('resize',size);
+function boom(n){
+  const cols=['#ff3377','#ffcc00','#4ade80','#fff4ea','#b98cff'];
+  for(let i=0;i<n;i++)ps.push({x:innerWidth/2,y:innerHeight*0.45,vx:(Math.random()-.5)*14,vy:Math.random()*-14-3,r:Math.random()*6+3,c:cols[i%5],l:120+Math.random()*60});
+}
+(function loop(){
+  cx.clearRect(0,0,cv.width,cv.height);
+  ps=ps.filter(p=>p.l-->0);
+  ps.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.35;cx.fillStyle=p.c;cx.fillRect(p.x,p.y,p.r,p.r*1.6)});
+  requestAnimationFrame(loop);
+})();
+
+scan();
+</script>
+</body>
+</html>
